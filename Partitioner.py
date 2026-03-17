@@ -33,6 +33,8 @@ def check_split_sum(sum, vals=[], required_sum=1):
 
 def partitionSet(X, y, train_p=60, val_p=20, test_p=20, seed=1234):
     '''
+    Splits the data points and labels into partitions with sizes respective to the given percentages.
+
     Input: 
         1. X: The data points to be partitioned.
         2. y: The labels corresponding to the data points.
@@ -74,11 +76,12 @@ def partitionSet(X, y, train_p=60, val_p=20, test_p=20, seed=1234):
     return train_x, val_x, test_x, train_y, val_y, test_y
 
 
-def getDefaultWineSets(seed=1234):
+def getDefaultWineSets():
     '''
-    Input: 
-        seed (default = 1234): The random seed with which to partition the data.
-    Returns: The Wine data set features and labels partitioned and returned like so:
+    Returns the default partitions of the Wine dataset to be used by everyone in the group.
+
+    Input: None
+    Returns:
         Features:
         1. train_x: Training features.
         2. val_x: Validation features.
@@ -89,7 +92,7 @@ def getDefaultWineSets(seed=1234):
         5. val_y: Validation labels.
         6. test_y: Test labels.
     '''
-    
+
     wine_X, wine_y = load_wine(return_X_y=True)
 
-    return partitionSet(wine_X, wine_y, seed=seed)
+    return partitionSet(wine_X, wine_y)
