@@ -1,5 +1,11 @@
 from sklearn.model_selection import train_test_split
+from enum import Enum
 import pandas as pd
+
+
+class WineType(Enum):
+    RED = 0
+    WHITE = 1
 
 
 def check_split_sum(sum, vals=[], required_sum=1):
@@ -98,8 +104,8 @@ def getDefaultWineSets():
     white_wine_data = pd.read_csv("wine+quality\winequality-white.csv", delimiter=";")
     
     # Insert "type" columns
-    red_wine_data.insert(0, 'type', "red")
-    white_wine_data.insert(0, 'type', "white")
+    red_wine_data.insert(0, 'type', int(WineType['RED'].value))
+    white_wine_data.insert(0, 'type', int(WineType['WHITE'].value))
 
     # Combine datasets
     wine = pd.concat([red_wine_data, white_wine_data], axis=0)
@@ -109,3 +115,7 @@ def getDefaultWineSets():
     wine_y = wine.iloc[:, 12].to_numpy()
 
     return partitionSet(wine_X, wine_y)
+
+
+if __name__ == "__main__":
+    x_tr, x_val, x_te, y_tr, y_val, y_te = getDefaultWineSets()
