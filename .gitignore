@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 .venv
+=======
+.venv.venv/
+>>>>>>> 16b0d88 (Add KNN notebook and update KNN code)
