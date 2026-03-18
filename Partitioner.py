@@ -1,5 +1,5 @@
 from sklearn.model_selection import train_test_split
-from sklearn.datasets import load_wine
+import pandas as pd
 
 
 def check_split_sum(sum, vals=[], required_sum=1):
@@ -80,7 +80,7 @@ def getDefaultWineSets():
     '''
     Returns the default partitions of the Wine dataset to be used by everyone in the group.
 
-    Input: None
+    Input: None.
     Returns:
         Features:
         1. train_x: Training features.
@@ -93,6 +93,19 @@ def getDefaultWineSets():
         6. test_y: Test labels.
     '''
 
-    wine_X, wine_y = load_wine(return_X_y=True)
+    # Load wine data
+    red_wine_data = pd.read_csv("wine+quality\winequality-red.csv", delimiter=";")
+    white_wine_data = pd.read_csv("wine+quality\winequality-white.csv", delimiter=";")
+    
+    # Insert "type" columns
+    red_wine_data.insert(0, 'type', "red")
+    white_wine_data.insert(0, 'type', "white")
+
+    # Combine datasets
+    wine = pd.concat([red_wine_data, white_wine_data], axis=0)
+
+    # Separate feature and label values, and convert to Numpy arrays
+    wine_X = wine.iloc[:, 0:12].to_numpy()
+    wine_y = wine.iloc[:, 12].to_numpy()
 
     return partitionSet(wine_X, wine_y)
